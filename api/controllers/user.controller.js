@@ -1,3 +1,5 @@
 export const test = (req, res) => {
-  res.json({ name: "Damon" });
+  res.json({
+    name: "Gilbert",
+  });
 };
