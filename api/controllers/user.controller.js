@@ -1,21 +1,40 @@
+import bcryptjs from "bcryptjs";
 import User from "../models/user.model.js";
 import { errorHandler } from "../utils/error.js";
-import bcryptjs from "bcryptjs";
 
 export const test = (req, res) => {
   res.json({
-    name: "Gilbert",
+    message: "Api route is working!",
   });
 };
 
 export const updateUser = async (req, res, next) => {
   if (req.user.id !== req.params.id)
-    return next(errorHandler(401, "Invalid user"));
+    return next(errorHandler(401, "You can only update your own account!"));
 
+  const userWithSameUsername = await User.findOne({
+    username: req.body.username,
+  });
+  const userWithSameEmail = await User.findOne({ email: req.body.email });
+
+  if (userWithSameUsername && userWithSameUsername._id !== req.params.id) {
+    return res.status(400).json({
+      success: false,
+      message: "Username is not unique",
+    });
+  }
+
+  if (userWithSameEmail && userWithSameEmail._id !== req.params.id) {
+    return res.status(400).json({
+      success: false,
+      message: "Email is not unique",
+    });
+  }
   try {
     if (req.body.password) {
       req.body.password = bcryptjs.hashSync(req.body.password, 10);
     }
+
     const updatedUser = await User.findByIdAndUpdate(
       req.params.id,
       {
@@ -28,7 +47,9 @@ export const updateUser = async (req, res, next) => {
       },
       { new: true }
     );
+
     const { password, ...rest } = updatedUser._doc;
+
     res.status(200).json(rest);
   } catch (error) {
     next(error);
