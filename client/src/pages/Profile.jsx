@@ -186,6 +186,12 @@ const Profile = () => {
         >
           {loading ? "loading..." : "update"}
         </button>
+        <Link
+          to={"/create-listing"}
+          className="uppercase bg-green-500 p-3 rounded-lg text-white font-semibold text-center hover:opacity-80"
+        >
+          Create Listing
+        </Link>
       </form>
       <div className=" flex justify-between mt-5">
         <span onClick={handleSignOut} className="text-red-700 cursor-pointer">
