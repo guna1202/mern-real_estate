@@ -213,12 +213,12 @@ const Profile = () => {
         />
         <button
           disabled={loading}
-          className="bg-slate-700 text-white rounded-lg p-3 uppercase hover:opacity-95 disabled:opacity-80"
+          className="bg-slate-700 text-white rounded-lg p-3 uppercase hover:opacity-95 disabled:opacity-80 font-semibold"
         >
           {loading ? "Loading..." : "Update"}
         </button>
         <Link
-          className="bg-green-500 text-white p-3 rounded-lg uppercase text-center hover:opacity-95"
+          className="bg-green-500 text-white p-3 rounded-lg uppercase text-center hover:opacity-95 font-semibold"
           to={"/create-listing"}
         >
           Create Listing
