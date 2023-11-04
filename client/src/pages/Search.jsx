@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import ListingItem from "../components/ListingItem";
 
 const Search = () => {
   const navigate = useNavigate();
@@ -15,7 +16,7 @@ const Search = () => {
   });
   const [loading, setLoading] = useState(false);
   const [listings, setListings] = useState([]);
-  console.log(listings);
+
   useEffect(() => {
     const urlParams = new URLSearchParams(location.search);
     const searchTermFromUrl = urlParams.get("searchTerm");
@@ -103,110 +104,126 @@ const Search = () => {
 
   return (
     <div className="flex flex-col md:flex-row">
-      <div className="p-7 border-b-2 md:border-r-2 md:min-h-screen">
-        <form onSubmit={handleSubmit} className="flex flex-col">
+      <div className="p-7  border-b-2 md:border-r-2 md:min-h-screen">
+        <form onSubmit={handleSubmit} className="flex flex-col gap-8">
           <div className="flex items-center gap-2">
             <label className="whitespace-nowrap font-semibold">
               Search Term:
             </label>
             <input
               type="text"
-              placeholder="Search..."
               id="searchTerm"
-              className="border rounded-lg p-3 w-full bg-slate-200"
+              placeholder="Search..."
+              className="text-slate-200 border rounded-lg p-3 w-full"
               value={sidebardata.searchTerm}
               onChange={handleChange}
             />
           </div>
-          <div className="flex gap-2 items-center">
-            <label className="font-semibold">Type: </label>
-            <div className="flex gap-1">
+          <div className="flex gap-2 flex-wrap items-center">
+            <label className="font-semibold">Type:</label>
+            <div className="flex gap-2">
               <input
                 type="checkbox"
                 id="all"
                 className="w-5"
-                checked={sidebardata.type === "all"}
                 onChange={handleChange}
+                checked={sidebardata.type === "all"}
               />
-              <span className="whitespace-nowrap">Rent & Sell</span>
+              <span>Rent & Sale</span>
             </div>
-            <div className="flex gap-2 p-5">
+            <div className="flex gap-2">
               <input
                 type="checkbox"
                 id="rent"
                 className="w-5"
-                checked={sidebardata.type === "rent"}
                 onChange={handleChange}
+                checked={sidebardata.type === "rent"}
               />
-              <span className="whitespace-nowrap">Rent</span>
+              <span>Rent</span>
             </div>
-            <div className="flex gap-2 p-5">
+            <div className="flex gap-2">
               <input
                 type="checkbox"
                 id="sale"
                 className="w-5"
-                checked={sidebardata.type === "sale"}
                 onChange={handleChange}
+                checked={sidebardata.type === "sale"}
               />
-              <span className="whitespace-nowrap">Sell</span>
+              <span>Sale</span>
             </div>
-            <div className="flex gap-2 p-5">
+            <div className="flex gap-2">
               <input
                 type="checkbox"
                 id="offer"
                 className="w-5"
-                checked={sidebardata.offer}
                 onChange={handleChange}
+                checked={sidebardata.offer}
               />
-              <span className="whitespace-nowrap">Offer</span>
+              <span>Offer</span>
             </div>
           </div>
-          <div className="flex gap-2 items-center">
-            <label className="font-semibold">Amenities: </label>
+          <div className="flex gap-2 flex-wrap items-center">
+            <label className="font-semibold">Amenities:</label>
             <div className="flex gap-2">
               <input
                 type="checkbox"
                 id="parking"
                 className="w-5"
-                checked={sidebardata.parking}
                 onChange={handleChange}
+                checked={sidebardata.parking}
               />
-              <span className="whitespace-nowrap">Parking spot</span>
+              <span>Parking</span>
             </div>
-            <div className="flex gap-2 p-5">
+            <div className="flex gap-2">
               <input
                 type="checkbox"
                 id="furnished"
                 className="w-5"
-                checked={sidebardata.furnished}
                 onChange={handleChange}
+                checked={sidebardata.furnished}
               />
-              <span className="whitespace-nowrap">Furnished</span>
+              <span>Furnished</span>
             </div>
           </div>
           <div className="flex items-center gap-2">
             <label className="font-semibold">Sort:</label>
             <select
-              id="sort_order"
-              className="border rounded-lg p-3 bg-slate-200"
-              defaultValue={"created_at_desc"}
               onChange={handleChange}
+              defaultValue={"created_at_desc"}
+              id="sort_order"
+              className="border rounded-lg p-3"
             >
               <option value="regularPrice_desc">Price high to low</option>
-              <option value="regularPrice_asc">Price low to high</option>
+              <option value="regularPrice_asc">Price low to hight</option>
               <option value="createdAt_desc">Latest</option>
               <option value="createdAt_asc">Oldest</option>
             </select>
           </div>
-          <button className="bg-green-500 uppercase text-white p-3 rounded-lg w-full my-4 font-semibold hover:opacity-95">
+          <button className="bg-slate-700 text-white p-3 rounded-lg uppercase hover:opacity-95">
             Search
           </button>
         </form>
       </div>
-      <div className="p-7">
-        <h1 className="text-3xl font-semibold border-b p-3 test-slate-700 mt-5">
-          Listing Items:
+      <div className="flex-1">
+        <h1 className="text-3xl font-semibold border-b p-3 text-slate-700 mt-5">
+          Listing results:
         </h1>
+        <div className="p-7 flex flex-wrap gap-4">
+          {!loading && listings.length === 0 && (
+            <p className="text-xl text-slate-700">No listing found!</p>
+          )}
+          {loading && (
+            <p className="text-xl text-slate-700 text-center w-full">
+              Loading...
+            </p>
+          )}
+
+          {!loading &&
+            listings &&
+            listings.map((listing) => (
+              <ListingItem key={listing._id} listing={listing} />
+            ))}
+        </div>
       </div>
     </div>
   );
