@@ -2,6 +2,7 @@ import { FaSearch } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
+import { Link as ScrollLink } from "react-scroll";
 
 export default function Header() {
   const { currentUser } = useSelector((state) => state.user);
@@ -23,7 +24,7 @@ export default function Header() {
     }
   }, [location.search]);
   return (
-    <header className="bg-slate-200 shadow-md">
+    <header className="bg-slate-200">
       <div className="flex justify-between items-center max-w-6xl mx-auto p-3">
         <Link to="/">
           <h1 className="font-bold text-sm sm:text-xl flex flex-wrap">
@@ -57,6 +58,19 @@ export default function Header() {
               About
             </li>
           </Link>
+          <li>
+            <ScrollLink
+              activeClass="active"
+              to="show_listing"
+              spy={true}
+              smooth={true}
+              offset={-70}
+              duration={500}
+            >
+              {" "}
+              <p className="hover:underline cursor-pointer">Listings</p>
+            </ScrollLink>
+          </li>
           <Link to="/profile">
             {currentUser ? (
               <img

@@ -5,6 +5,7 @@ import SwiperCore from "swiper";
 import { Navigation, Autoplay } from "swiper/modules";
 import "swiper/css/bundle";
 import ListingItem from "../components/ListingItem";
+import VideoBackground from "../components/VideoBackground";
 
 export default function Home() {
   SwiperCore.use([Navigation, Autoplay]);
@@ -50,28 +51,8 @@ export default function Home() {
 
   return (
     <div>
-      <div className="flex flex-col gap-6 p-28 px-3 max-w-6xl mx-auto">
-        <h1 className="bg-gradient-to-r from-lime-700 to-emerald-500 text-transparent bg-clip-text font-extrabold text-3xl lg:text-6xl">
-          Find your next{" "}
-          <span className="bg-gradient-to-l from-lime-600 to-green-600 text-transparent bg-clip-text">
-            perfect
-          </span>
-          <br />
-          place with ease
-        </h1>
-        <div className="bg-gradient-to-l from-green-600 to-green-900 text-transparent bg-clip-text text-xs sm:text-xl">
-          Future Realty is the best place to find your next perfect place to
-          live.
-          <br />
-          We have a wide range of properties for you to choose from.
-        </div>
-        <Link
-          to={"/search"}
-          className="hover:underline text-xs sm:text-xl bg-gradient-to-l from-green-600 to-green-900 text-transparent bg-clip-text font-bold"
-        >
-          Let's get started...
-        </Link>
-      </div>
+      <VideoBackground />
+
       <Swiper navigation autoplay={true}>
         {offerListings &&
           offerListings.length > 0 &&
@@ -88,7 +69,10 @@ export default function Home() {
             </SwiperSlide>
           ))}
       </Swiper>
-      <div className="max-w-6xl mx-auto p-3 flex flex-col gap-8 my-10">
+      <div
+        id="show_listing"
+        className="max-w-6xl mx-auto p-3 flex flex-col gap-8 my-10"
+      >
         {offerListings && offerListings.length > 0 && (
           <div className="">
             <div className="my-3">
