@@ -1,6 +1,7 @@
 import React from "react";
 import ReactPlayer from "react-player";
 import { Link } from "react-router-dom";
+import { Link as ScrollLink } from "react-scroll";
 
 const VideoBackground = () => {
   return (
@@ -34,7 +35,19 @@ const VideoBackground = () => {
             to={"/search"}
             className="text-white hover:underline text-xs sm:text-xl font-bold"
           >
-            Let's get started...
+            <ScrollLink
+              activeClass="active"
+              to="show_listing"
+              spy={true}
+              smooth={true}
+              offset={-70}
+              duration={500}
+            >
+              {" "}
+              <p className="hover:underline cursor-pointer">
+                Let's get started...
+              </p>
+            </ScrollLink>
           </Link>
         </div>
       </div>

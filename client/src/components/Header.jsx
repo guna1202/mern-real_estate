@@ -2,7 +2,6 @@ import { FaSearch } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
-import { Link as ScrollLink } from "react-scroll";
 
 export default function Header() {
   const { currentUser } = useSelector((state) => state.user);
@@ -58,19 +57,6 @@ export default function Header() {
               About
             </li>
           </Link>
-          <li>
-            <ScrollLink
-              activeClass="active"
-              to="show_listing"
-              spy={true}
-              smooth={true}
-              offset={-70}
-              duration={500}
-            >
-              {" "}
-              <p className="hover:underline cursor-pointer">Listings</p>
-            </ScrollLink>
-          </li>
           <Link to="/profile">
             {currentUser ? (
               <img
